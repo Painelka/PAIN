@@ -1,0 +1,48 @@
+#include <iostream>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+using namespace std;
+class poisk_diag {
+private:
+	double m_storona;
+	double m_diag;
+public:
+	poisk_diag(double storona) {
+		set();
+		if (storona <= 0) {
+			//cout << "Неккоректные данные." << endl;
+		}
+	}
+	poisk_diag() {
+		m_storona = 0;
+	}
+	void set2() {
+		cout << "Неккоректные данные." << endl;
+	}
+	void set() {
+		double storona;
+		cout << "Введите значение стороны." << endl;
+		cin >> storona;
+		m_storona = storona;
+	}
+	int get() {
+		return m_storona;
+	}
+	double diagonal() {
+		m_diag = m_storona * sqrt(2);
+		return m_diag;
+	}
+};     
+int main (){
+	setlocale(LC_ALL, "Russian");
+	poisk_diag d1;
+	d1.set();
+	if (d1.get() > 0) {
+		cout << d1.diagonal() << endl;
+	}
+	else {
+		d1.set2();
+	}
+	system("pause");
+}
