@@ -1,0 +1,66 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class animal
+{
+private:
+	unsigned int m_id;
+	string m_name;
+
+public:
+	animal(int id, string name)
+	{
+		m_id = id;
+		m_name = name;
+	}
+
+	std::string Name()
+	{
+		return m_name;
+	}
+};
+
+class Zoo
+{
+private:
+	unsigned int m_id;
+	std::string m_name;
+	std::vector<animal*> m_animals;
+
+public:
+	Zoo(int id, string name)
+	{
+		m_id = id;
+		m_name = name;
+	}
+
+	void Add_animal(animal*& animal)
+	{
+		std::cout << "2 " << animal<< std::endl;
+		animal = nullptr;
+		std::cout << "3 " << animal << std::endl;
+	}
+
+	void write()
+	{
+		for (size_t i = 0; i < m_animals.size(); i++)
+			cout << m_animals[i]->Name() << endl;
+	}
+};
+
+int main()
+{
+
+	Zoo* zoopark = new Zoo(0, "Zootopia");
+	zoopark->write();
+	animal* animal1 = new animal(1, "Tiger");
+	cout << "1 " << animal1 << endl;
+	zoopark->Add_animal(animal1);
+	cout << "4 " << animal1 << endl;
+	zoopark->write();
+	cout << sizeof(*animal1) << endl;
+	delete zoopark;
+
+	return 0;
+}
