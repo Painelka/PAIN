@@ -1,7 +1,4 @@
 #include <iostream>
-#define _USE_MATH_DEFINES
-#include <math.h>
-
 using namespace std;
 class poisk_diag {
 private:
@@ -18,7 +15,8 @@ public:
 		m_storona = 0;
 	}
 	void set2() {
-		cout << "Неккоректные данные." << endl;
+		m_storona = 404;
+		cout << "Неккоректные данные." << endl<< m_storona << endl;	
 	}
 	void set() {
 		double storona;
@@ -39,10 +37,10 @@ int main (){
 	poisk_diag d1;
 	d1.set();
 	if (d1.get() > 0) {
-		cout << d1.diagonal() << endl;
+		cout << "Диагональ равна: "<< d1.diagonal() << endl;
 	}
 	else {
 		d1.set2();
 	}
-	system("pause");
+	system("pause");            
 }
