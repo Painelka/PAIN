@@ -1,66 +1,49 @@
+//Зоопарк и его обитатели
 #include <iostream>
 #include <vector>
 using namespace std;
 
-class animal
-{
+class animal {
 private:
 	unsigned int m_id;
 	string m_name;
-
 public:
-	animal(int id, string name)
-	{
+	animal(int id, string name) {
 		m_id = id;
 		m_name = name;
 	}
-
-	std::string Name()
-	{
+	string Name() {
 		return m_name;
 	}
 };
-
-class Zoo
-{
+class zoo {
 private:
 	unsigned int m_id;
-	std::string m_name;
-	std::vector<animal*> m_animals;
+	string m_name;
+	vector<animal*>m_animal; //создаём вектор
 
 public:
-	Zoo(int id, string name)
-	{
+	zoo(int id, string name) {
 		m_id = id;
 		m_name = name;
 	}
-
-	void Add_animal(animal*& animal)
-	{
-		std::cout << "2 " << animal<< std::endl;
+	void add_animal(animal*& animal) {//шаблон
+		cout << "2 " << animal <<endl;
 		animal = nullptr;
-		std::cout << "3 " << animal << std::endl;
+		cout << "3 " << animal <<endl;
 	}
-
-	void write()
-	{
-		for (size_t i = 0; i < m_animals.size(); i++)
-			cout << m_animals[i]->Name() << endl;
+	void write() {
+		for (size_t i = 0; m_animal.size(); i++) { // размер вектора
+			cout << m_animal[i]->Name() << endl;
+		}
 	}
 };
-
-int main()
-{
-
-	Zoo* zoopark = new Zoo(0, "Zootopia");
+int main() {
+	zoo* zoopark = new zoo (0, "Zootopia");
 	zoopark->write();
-	animal* animal1 = new animal(1, "Tiger");
-	cout << "1 " << animal1 << endl;
-	zoopark->Add_animal(animal1);
-	cout << "4 " << animal1 << endl;
-	zoopark->write();
-	cout << sizeof(*animal1) << endl;
+	animal*animal1 = new animal(1, "Tiger");
+	zoopark->add_animal(animal1);
 	delete zoopark;
-
+	zoopark->write();
+	system("pause");
 	return 0;
-}
