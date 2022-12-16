@@ -1,0 +1,45 @@
+
+#include <iostream>
+#include <vector>  
+using namespace std;
+ 
+int main() {
+	setlocale(LC_ALL, "Rus");
+	vector<int> vector1 = { 2, 9, 3, 4};//работа с целыми числами
+    vector<int> vector2 = { 2,6, 3, 4 };
+	// push_back
+	vector1.push_back(3); //добавление в конце
+	auto iter = vector1.cbegin(); //константный итератор указывает на первый элемент
+	auto iter2 = vector2.cbegin();
+	//insert
+	vector1.insert(iter + 2, 8); // добавляет в 3 по счету элемент 8. 
+	//Низя писать после добавления в начале, иначе всё сломается.
+	//  erase
+	vector2.erase(iter2 + 0); // стирает элемент под опр. номером
+	for (int i = 0; i < vector1.size(); i++) { //Количество элементов в массиве - vector1.size() 
+		cout << vector1[i] << endl;
+	}
+	cout << endl;
+	for (int i = 0; i < vector2.size(); i++) { 
+		cout << vector2[i] << endl;
+
+	}
+
+
+	//	2.	emplace_back
+
+	//	3.	resize, reserve, shrink_to_fit, capacity
+
+	//	4.	clear*
+	
+	//vector1.clear(); //чистит все элементы в массиве
+	cout << "Количество элементов в массиве "<<vector1.size() << endl;
+
+
+	//	5.	оператор присваивания и[]*
+	vector1[0] = 2;
+	cout << vector1[0] << endl; // печатаем элемент находящимся под определенным номером 
+	
+  system("pause");
+  return 0;
+}
