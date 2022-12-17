@@ -1,0 +1,100 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+void swapn(string s, int mas[1000]) {
+	for (int i = 0; i < s.length(); i++) {
+		mas[i + 1] = s[i] - '0';
+	}
+	mas[0] = s.length();//длина массива 
+	for (int i = 1; i < mas[0] / 2 + 1; i++) {
+		int k = mas[0] - i + 1;
+		swap(mas[i], mas[k]);
+	}
+}
+void summa(int m1[1000], int m2[1000], int sum[1000]) {
+	if (m1[0] > m2[0]) {
+		sum[0] = m1[0];
+	}
+	else {
+		sum[0] = m2[0];
+	}
+	int q = 0;
+	for (int i = 1; i <= sum[0]; i++)
+	{
+		sum[i] = m1[i] + m2[i] + q;
+		q = sum[i] / 10;
+		sum[i] = sum[i] % 10;
+	}
+	if (q != 0) {
+		sum[0]++;
+		sum[sum[0]] = q;
+	}
+}
+void multi(int m1[1000], int m2[1000], int mult[1000]) {
+	mult[0] = m2[0] + m1[0];
+	for (int i = 1; i <= m1[0]; i++) {
+		int p = 0;
+		for (int j = 1; j <= m2[0]; j++) {
+			mult[i + j - 1] += m1[i]*m2[j];
+			p = mult[i + j - 1] / 10;
+			mult[i + j] += p;
+			mult[i + j - 1] = mult[i + j - 1] % 10;
+		}
+	}
+}
+void write (int m1[1000], int m2[1000], int mult[1000], int sum[1000]) {
+
+	for (int i = m1[0]; i >= 1; i--) {
+		cout << m1[i] << "";
+	}
+	cout << endl;
+	for (int i = m2[0]; i >= 1; i--) {
+		cout << m2[i] << "";
+	}
+	cout << endl;
+	if (mult[mult[0]] == 0) {
+		mult[0] = mult[0] - 1;
+	}
+	for (int i = mult[0]; i >= 1; i--) {
+		cout << mult[i];
+		//умножение было.
+	}
+	cout << endl;
+	cout << endl;
+	for (int i = m1[0]; i >= 1; i--) {
+		cout << m1[i] << "";
+	}
+	cout << endl;
+	for (int i = m2[0]; i >= 1; i--) {
+		cout << m2[i] << "";
+	}
+	cout << endl;
+	for (int i = sum[0]; i >= 1; i--) {
+		cout << sum[i];
+	}
+	cout << endl;
+}
+
+
+
+int main() {
+	string str;
+	string str1;
+	int mas1[1000] = { 0 };
+	int mas2[1000] = { 0 };
+	ifstream fin("in.txt");
+	ofstream fout("out.txt");
+	fin >> str;
+	fin >> str1;
+
+	int sum[1000] = { 0 };
+	int mult[1000] = { 0 };
+	swapn(str, mas1);
+	swapn(str1, mas2);
+	summa(mas1, mas2, sum);
+	multi(mas1, mas2, mult);
+	write(mas1, mas2, mult, sum);
+	system("pause");
+	return 0;
+}
