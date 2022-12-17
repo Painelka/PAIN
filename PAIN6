@@ -1,0 +1,106 @@
+main--------------
+#include <iostream> 
+#include "func.hpp"
+
+int main() {
+	int n = 0, m = 0, mat[100][100];
+	ss::read(n, m, mat);
+	if ( ss::stroka (n, m, mat)) {
+		ss::MinElStolb(n, m, mat, ss::isPrime(n, m, mat));
+		
+	}
+	ss::write(n, m, mat);
+	system("pause");
+	return 0;
+}
+-------------------------
+hpp-----------------
+#pragma once
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <cctype>
+namespace ss {
+	void read(int &n, int &m, int mat[100][100]);
+	void write(int n, int m, int mat[100][100]);
+	int isPrime(int n, int m, int mat[100][100]);
+	bool stroka(int n, int m, int mat[100][100]);
+	void MinElStolb(int n, int m, int mat[100][100], int biggest);
+}--------------
+#include "func.hpp"
+using namespace std;
+namespace ss {
+	void read(int &n, int &m, int mat[100][100]) {
+		cin >> n;
+		cin >> m;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				cin >> mat[i][j];
+			}
+		}
+	}
+	void write(int n, int m, int mat[100][100]) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				cout << mat[i][j] << " ";
+			}
+			cout << endl;
+		}
+	}
+	int isPrime(int n, int m, int mat[100][100]) {
+		int max = 0;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				bool flag = true;
+				if (mat[i][j] < 2) {
+					flag = false;
+				}
+				for (int k = 2; k <= sqrt(mat[i][j]); k++) {
+					if (mat[i][j] % k == 0) {
+						flag = false;
+						break;
+					}
+				}
+				if ((max < mat[i][j])&& flag){
+					max = mat[i][j];
+				}
+			}
+		}
+		return max;
+	}
+	bool stroka(int n, int m, int mat[100][100]){
+		for (int i = 0; i < n; i++) {
+			for (int k = 0; k < n; k++) {
+				int l = 0;
+				for (int j = 0; j < m; j++) {
+					if ( mat[i][j]==mat[k][j]){
+						l = l + 1;
+					}
+				}
+				if (m == l) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	void MinElStolb(int n, int m, int mat[100][100], int biggest)  {//минимальный элемент в столбце 
+		for (int j = 0; j < m; j++) {
+			int min = INT_MAX;
+			int index = -1;
+			for (int i = 0; i < n; i++) {
+				if (min > mat[i][j]) {
+					min = mat[i][j];
+					index = i;
+				}
+			}
+			mat[index][j] = biggest;
+			for (int i = 0; i < n; i++) {
+				if (mat[i][j] == min) {
+					mat[i][j] = biggest;
+
+				}
+			}
+		}
+	}
+}
