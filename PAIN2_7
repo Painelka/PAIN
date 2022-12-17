@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+int main() {
+	int ton1, ton2, cena1, cena2, mas;
+	cin >> ton1;
+	cin >> cena1;
+	cin >> ton2;
+	cin >> cena2;
+	cin >> mas;
+	int min = INT_MAX;
+	for (int i = 0; i < mas / ton1 + 1; i++) {
+		for (int j = 0; j < mas / ton2 + 1; j++) {
+			int summa = 0;
+			if ((i * ton1 + j * ton2) >= mas) {
+				summa = i*cena1 + j*cena2;
+				if (summa < min) {
+					min = summa;
+				}
+			}
+		}
+	cout << min;
+	system("pause");
+}
