@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <vector>
+using namespace std;
+
+struct blati {
+	int chislo;
+	string stroka;
+
+
+};
+class shifr {
+private:
+	int Fib[100];
+	vector<blati>Ocheredi;
+public:
+	int Fib[100];
+	/*shifr() {*/
+		//for (int i = 2; i < 32; i++) {
+		//	Ocheredi.push_back( { Fib[i]})
+		//}
+	void Fibonachi(int n, int Fib[100]) {
+		for (int i = 2; i < n; i++) {
+			if (i == 0) {
+				Fib[i] = 0;
+			}
+			else if ((i == 1) || (i == 2)) {
+				Fib[i] = 1;
+			}
+			else {
+				Fib[i] = Fib[i - 1] + Fib[i - 2];
+			}
+		}
+	}
+	void encode() {
+
+		ifstream fin("in.txt");
+		ofstream fout("out.txt");
+		int i = 0;
+		string slovo;
+		while (fin >> slovo) {
+			blati s;
+			s.chislo = Fib[i];
+			Ocheredi.push_back(s);
+			i++;
+
+		}
+		for (int i =0; i<Ocheredi.)
+		}
+	
+};
+
+int main() {
+	int Fib[100] = { 0 };
+	int n = 0;
+	string str;
+
+
+
+
+
+	fin >> str;
+	.Fibonachi(32, Fib);
+	for (int i =2; i<32; i++){
+	    cout << Fib[i] << endl;
+	}
+
+
+	system("pause");
+}
