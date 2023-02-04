@@ -7,25 +7,17 @@ using namespace std;
 struct blati {
 	int chislo;
 	string stroka;
-
-
 };
 class shifr {
 private:
 	int Fib[100];
 	vector<blati>Ocheredi;
+	vector<int>Key;
+
 public:
-	int Fib[100];
-	/*shifr() {*/
-		//for (int i = 2; i < 32; i++) {
-		//	Ocheredi.push_back( { Fib[i]})
-		//}
-	void Fibonachi(int n, int Fib[100]) {
-		for (int i = 2; i < n; i++) {
-			if (i == 0) {
-				Fib[i] = 0;
-			}
-			else if ((i == 1) || (i == 2)) {
+	void Fibonachi(int n) {
+		for (int i = 1; i < n; i++) {
+			if ((i == 2) || (i == 1)) {
 				Fib[i] = 1;
 			}
 			else {
@@ -33,38 +25,69 @@ public:
 			}
 		}
 	}
-	void encode() {
-
+	void read() {
+		Fibonachi(20);
 		ifstream fin("in.txt");
 		ofstream fout("out.txt");
-		int i = 0;
+		int i = 2;
 		string slovo;
 		while (fin >> slovo) {
 			blati s;
+			s.stroka = slovo;
 			s.chislo = Fib[i];
 			Ocheredi.push_back(s);
 			i++;
+		}
+		for (int i = 0; i < Ocheredi.size(); i++) {
+			fout << Ocheredi[i].chislo << " " << Ocheredi[i].stroka << endl;
+		}
+	}
+	void encode(){
+		read();
+		int n = 0;
+		int in = 0;
+		cout << "Введите какой размер ключа вы хотите" << endl;
+		cin >> in;
+		cout << "Введите ключ через пробел" << endl;
+		for (int i = 0; i <in; i++) {
+			cin >> n;
+			Key.push_back(n);
+		}
+		int k = 0;
+		for (int i = 0; i < Ocheredi.size(); i++) {
+			for (int j = 0; j < Key.size(); j++) {
+				if (Key[j] != Ocheredi[i].chislo) {
+					k ++;
+				}
+			}
+		}
 
+		if (Key.size() != Ocheredi.size()) {
+			cout << "ERROR" << endl;
 		}
-		for (int i =0; i<Ocheredi.)
+	   else if (k != Key.size()) {
+			cout << "ERROR" << endl;
 		}
+	   else { 
+		   for (int i = 0; i < Ocheredi.size(); i++) {
+			   for (int j = 0; j < Ocheredi.size(); j++) {
+				   if (Key[j] != Ocheredi[i].chislo); {
+					   swap(Ocheredi[i].stroka, (Ocheredi[j].stroka));
+				   }
+			   }
+			   cout << Ocheredi[i].stroka << endl;
+		    
+		   }
+
+	   }
+	}
 	
 };
 
 int main() {
-	int Fib[100] = { 0 };
-	int n = 0;
-	string str;
+	shifr shifr;
+	shifr.encode();
 
-
-
-
-
-	fin >> str;
-	.Fibonachi(32, Fib);
-	for (int i =2; i<32; i++){
-	    cout << Fib[i] << endl;
-	}
 
 
 	system("pause");
