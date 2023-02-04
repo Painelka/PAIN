@@ -56,7 +56,7 @@ public:
 		int k = 0;
 		for (int i = 0; i < Ocheredi.size(); i++) {
 			for (int j = 0; j < Key.size(); j++) {
-				if (Key[j] != Ocheredi[i].chislo) {
+				if (Key[j] == Ocheredi[i].chislo) {
 					k ++;
 				}
 			}
