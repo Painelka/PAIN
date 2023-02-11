@@ -3,7 +3,6 @@
 #include <fstream>
 #include <vector>
 using namespace std;
-
 struct blati {
 	int chislo;
 	string stroka;
@@ -12,6 +11,7 @@ class shifr {
 private:
 	int Fib[100];
 	vector<blati>Ocheredi;
+	vector<int>Dekey;
 	vector<int>Key;
 
 public:
@@ -38,13 +38,14 @@ public:
 			Ocheredi.push_back(s);
 			i++;
 		}
-		for (int i = 0; i < Ocheredi.size(); i++) {
+		/*for (int i = 0; i < Ocheredi.size(); i++) {
 			fout << Ocheredi[i].chislo << " " << Ocheredi[i].stroka << endl;
-		}
+		}*/
 	}
 	void encode(){
 		read();
 		int n = 0;
+		string encodeStroka[100];
 		int in = 0;
 		cout << "Введите какой размер ключа вы хотите" << endl;
 		cin >> in;
@@ -52,12 +53,13 @@ public:
 		for (int i = 0; i <in; i++) {
 			cin >> n;
 			Key.push_back(n);
+			Dekey.push_back(n);
 		}
 		int k = 0;
 		for (int i = 0; i < Ocheredi.size(); i++) {
 			for (int j = 0; j < Key.size(); j++) {
 				if (Key[j] == Ocheredi[i].chislo) {
-					k ++;
+					k++;
 				}
 			}
 		}
@@ -69,24 +71,42 @@ public:
 			cout << "ERROR" << endl;
 		}
 	   else { 
-		   for (int i = 0; i < Ocheredi.size(); i++) {
-			   for (int j = 0; j < Ocheredi.size(); j++) {
-				   if (Key[j] != Ocheredi[i].chislo); {
-					   swap(Ocheredi[i].stroka, (Ocheredi[j].stroka));
+		   for (int j = 0; j < Ocheredi.size(); j++) {
+			   for (int i = 0; i  < Ocheredi.size(); i++) {
+				   if ( Ocheredi[i].chislo == Key[j]) {
+					   encodeStroka[j] = Ocheredi[i].stroka;
 				   }
 			   }
-			   cout << Ocheredi[i].stroka << endl;
-		    
 		   }
-
+		   for (int i = 0; i < Ocheredi.size(); i++) {
+			  /* cout << encodeStroka[i] << endl;*/
+		   }
 	   }
+	}
+	void decode() {
+		encode();
+		string decodeStroka[100];
+
+		for (int i = 0; i < Ocheredi.size(); i++) {
+			for (int j = 0; j < Ocheredi.size(); j++) {
+				if (Key[i] < Key[j]) {
+					swap(Key[j], Key[i]);
+					Dekey[j] = Key[j];
+					cout <<i << " " << Dekey[j] << " " << Key[j] << " " << endl;
+				}
+			}
+		}
+		
+		/*for (int i = 0; i <Key.size(); i++) {
+			cout << Dekey[i];
+		}*/
 	}
 	
 };
 
 int main() {
 	shifr shifr;
-	shifr.encode();
+	shifr.decode();
 
 
 
