@@ -13,7 +13,6 @@ private:
 	vector<blati>Ocheredi;
 	vector<int>Dekey;
 	vector<int>Key;
-
 public:
 	void Fibonachi(int n) {
 		for (int i = 1; i < n; i++) {
@@ -38,9 +37,6 @@ public:
 			Ocheredi.push_back(s);
 			i++;
 		}
-		/*for (int i = 0; i < Ocheredi.size(); i++) {
-			fout << Ocheredi[i].chislo << " " << Ocheredi[i].stroka << endl;
-		}*/
 	}
 	void encode(){
 		read();
@@ -53,7 +49,6 @@ public:
 		for (int i = 0; i <in; i++) {
 			cin >> n;
 			Key.push_back(n);
-			Dekey.push_back(n);
 		}
 		int k = 0;
 		for (int i = 0; i < Ocheredi.size(); i++) {
@@ -63,7 +58,6 @@ public:
 				}
 			}
 		}
-
 		if (Key.size() != Ocheredi.size()) {
 			cout << "ERROR" << endl;
 		}
@@ -79,7 +73,7 @@ public:
 			   }
 		   }
 		   for (int i = 0; i < Ocheredi.size(); i++) {
-			  /* cout << encodeStroka[i] << endl;*/
+			  cout << encodeStroka[i] << " ";
 		   }
 	   }
 	}
@@ -91,24 +85,26 @@ public:
 			for (int j = 0; j < Ocheredi.size(); j++) {
 				if (Key[i] < Key[j]) {
 					swap(Key[j], Key[i]);
-					Dekey[j] = Key[j];
-					cout <<i << " " << Dekey[j] << " " << Key[j] << " " << endl;
+					Key[j] = Key[j];
 				}
 			}
 		}
-		
-		/*for (int i = 0; i <Key.size(); i++) {
-			cout << Dekey[i];
-		}*/
+		for (int j = 0; j < Ocheredi.size(); j++) {
+			for (int i = 0; i < Ocheredi.size(); i++) {
+				if (Ocheredi[i].chislo == Key[j]) {
+					decodeStroka[j] = Ocheredi[i].stroka;
+				}
+			}
+		}
+		cout << endl;
+		for (int i = 0; i < Ocheredi.size(); i++) {
+			cout << decodeStroka[i] << " ";
+		}
+		cout << endl;
 	}
-	
 };
-
 int main() {
 	shifr shifr;
 	shifr.decode();
-
-
-
 	system("pause");
 }
