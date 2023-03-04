@@ -1,21 +1,21 @@
 #include <iostream>
 using namespace std;
 int main() {
-	int const N = 1000;
-	int mas1[N];
-	int mas2[N] = { 0 };
-	for (int i = 0; i < N; i++) {
-		mas1[i] = rand() % 100;
+	const int F = 8;
+	string masiv[F] = {"324", "7", "6j", "1", "2", "4", "12", "9"};
+	string copy_masiv[F];
+	for (int i = 0; i < F; i++) {
+		masiv[i] = copy_masiv[i];
+		cout << sizeof copy_masiv[i] << " ";
 	}
-	const long long* byte1 = (const long long*)&mas1[N];
-	long long* byte1 = (long long*)mas2;
-
-
-
-	//for (int i = 0; i < N; i++) {
-	//	cout << mas1[i] << endl;
-	//}
-
+	cout << endl;
+	cout << sizeof copy_masiv << " ";
+	cout << endl;
+	for (int i = 0; i < F; i++) {
+		string*byte = &masiv[i];
+		copy_masiv[i] = *byte;
+		cout << sizeof byte << " ";
+	}
 	system("pause");
 }
 	
