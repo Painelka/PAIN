@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+#include <SFML/Graphics.hpp>
+using namespace std;
+using namespace sf;
+class anitext {
+private :
+	string m_textis;
+	int m_duration =0;
+
+		
+public:
+	anitext(string textis, int duration) {
+		string m_textis = textis;
+		int m_duration = duration;
+	}
+	void hrono (){
+
+	}
+		
+};
+int main() {
+	RenderWindow window(VideoMode(500, 500), "DEAD!", Style::Default);
+
+	window.setVerticalSyncEnabled(true);
+	Font font;
+	font.loadFromFile("arialmt.ttf");
+	Text text("", font, 40);
+	text.setFillColor(Color(250, 223, 50)); 
+
+	string str = "Hell World";
+	Clock clock;
+	
+
+	while (window.isOpen())
+	{
+		window.clear(Color::Black);
+		text.setString(str); // задает строку текст
+		text.setPosition(250, 250); // позиция 
+		window.draw(text);// рисуем текст
+		window.display();
+	}
+	return 0;
+
+
+
+	system("pause");
+}
