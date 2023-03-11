@@ -6,40 +6,86 @@ using namespace sf;
 class anitext {
 private :
 	string m_textis;
-	int m_duration =0;
-
-		
+	float m_duration = 0;
+	Clock clock;
+	Text message;
+	Font font;
+	int kolichestvo;
+	int show_bykwa;
+	float skorosti;
+	float timeElaps;
+	string tmp_text = "";
 public:
-	anitext(string textis, int duration) {
-		string m_textis = textis;
-		int m_duration = duration;
+	anitext( ) {
+
+		message.setFont(font);
+		message.setString("");
+		//message.setFillColor(Color(250, 223, 50));
+		message.setCharacterSize(25);
+		show_bykwa = 0;
 	}
-	void split (int duration){
-		string textis = "Hell World";
-		float skorosti = textis.size / duration;
-		for (int i = 0; i < textis.size; i++) {
-			textis[i];
+	anitext(const float duration, const string textis) {
+		message.setFont(font);
+		message.setString("");
+		message.setCharacterSize(25);
+		show_bykwa = 0;
+		setDura(duration);
+		setString(textis);
+	}
+	void setDura(const float duration) {
+		//int duration;
+		m_duration = duration;
+		skorosti = m_duration / kolichestvo;
+		//cout << "Vvedite za skolko sekund bydet wiwoditsa text" << endl;
+	}
+	void setString( const string textis) {
+		//string textis;
+		m_textis = textis;
+		//cout << "Vvedite kakoi text bydet wiwoditsa" << endl;
+		kolichestvo = textis.length();
+		//cin >> textis;
+		skorosti = m_duration/ kolichestvo;
+	}
+	void shrift() {
+		font.loadFromFile("arialmt.ttf");
+
+		//message.setFillColor(Color(250, 223, 50));
+		message.setPosition(253, 230);
+	}
+	void animation() {
+		RenderWindow window(VideoMode(500, 500), "DEAD!", Style::Default);
+		Event event;
+		while (window.isOpen())
+		{
+			while (window.pollEvent(event)) {
+				if (event.type == Event::Closed) {
+					window.close();
+				}
+
+			}
+			//cout << "OK" << endl;
+			timeElaps = clock.getElapsedTime().asSeconds();
+			if ((timeElaps > skorosti) && (show_bykwa < kolichestvo)) {
+				tmp_text = tmp_text + m_textis[show_bykwa];
+				message.setString(tmp_text);
+				show_bykwa++;
+				clock.restart();
+			}
+			window.clear();
+			window.draw(message);// рисуем текст
+			window.display();
 		}
-	}
-		
+	}	
 };
 int main() {
-	RenderWindow window(VideoMode(500, 500), "DEAD!", Style::Default);
-	textis textis;
+	anitext ani(6, "Hello, worqqqqqq!") ;
+	ani.shrift();
+	ani.animation();
 	window.setVerticalSyncEnabled(true);
 	Font font;
 	font.loadFromFile("arialmt.ttf");
 	Text text("", font, 40);
 	text.setFillColor(Color(250, 223, 50)); 
-	Clock clock;
-	
-
-	while (window.isOpen())
-	{
-		window.clear(Color::Black);
-		text.setString(textis); // задает строку текст
-		text.setPosition(250, 250); // позиция 
-		window.draw(text);// рисуем текст
-		window.display();
-	}
-	return 0;
+	Clock clock;*/
+	system("pause");
+}
