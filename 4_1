@@ -61,7 +61,6 @@ public:
 				if (event.type == Event::Closed) {
 					window.close();
 				}
-
 			}
 			//cout << "OK" << endl;
 			timeElaps = clock.getElapsedTime().asSeconds();
@@ -79,13 +78,5 @@ public:
 };
 int main() {
 	anitext ani(6, "Hello, worqqqqqq!") ;
-	ani.shrift();
-	ani.animation();
-	window.setVerticalSyncEnabled(true);
-	Font font;
-	font.loadFromFile("arialmt.ttf");
-	Text text("", font, 40);
-	text.setFillColor(Color(250, 223, 50)); 
-	Clock clock;*/
 	system("pause");
 }
