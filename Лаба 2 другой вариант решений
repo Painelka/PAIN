@@ -1,0 +1,66 @@
+#pragma warning(disable : 4996)
+#include <iostream>
+using namespace std;
+
+struct stroki {
+private:
+	size_t m_size = 1;
+	char*m_str = nullptr; // Чтобы диструктор не ругался //
+public:
+	// Конструктор по умолчанию //
+	stroki() = default; 
+	// Конструктор запрещен //
+	stroki(int s, size_t size) = delete; 
+	// Преобразования из int в char //
+	stroki(char s, size_t size) : m_size(size), m_str(new char[size+1]) { 
+		cout << "Constructor1" << endl;
+		fill(m_str, m_str + m_size, s);
+		m_str[m_size] = 0;
+	}
+	// Список инициализаций членов класса //
+	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size+1]) { 
+		cout << "Constructor2 " << endl;
+		copy(str, str + m_size, m_str); 
+		m_str[m_size] = 0;
+	}
+	// Конструктор копирования + Дилигирующий конструктор //
+	stroki(const stroki& other):stroki(other.m_str) { 
+		cout << "Copy Constructor" << endl;
+	}
+	stroki& operator = (const stroki& other) {
+		cout << "Copy assigment operator" << endl;
+		delete[] m_str;
+		m_size = other.m_size;
+		m_str = new char[m_size];
+		copy(other.m_str, other.m_str + other.m_size, m_str);
+		return *this;
+	}
+	// Диструктор //
+	~stroki() {
+		cout << "Destructor" << endl;
+		if (m_str != nullptr) {
+			delete[] m_str; } 
+	}
+	// Константный метод //
+	size_t Size() const { 
+		return m_size;
+	}
+	void Print() const{
+		for (int i = 0; i < m_size; i++) {
+			cout << m_str[i];
+		}
+		cout << endl;
+	}
+};
+void f(stroki s) {
+	s.Print();
+}
+int main() {
+	stroki s1("Hello, world");
+	stroki s2("World");
+	s2 = s1;
+	s1.Print();
+	s2.Print();
+	//return 0;
+	system("pause");
+}
