@@ -4,27 +4,48 @@ using namespace std;
 struct stroki {
 private:
 	size_t m_size = 1;
-	char*m_str = nullptr;
-
+	char*m_str = nullptr; // Чтобы диструктор не ругался //
 public:
-	stroki() = default; // конструктор по умолчанию 
-	stroki(char s, size_t size) { // Преобразования из int в char
-		m_size = size;
-		m_str = new char[size];
+	// Конструктор по умолчанию //
+	stroki() = default; 
+	// Конструктор запрещен //
+	stroki(int s, size_t size) = delete; 
+	// Преобразования из int в char //
+	stroki(char s, size_t size) : m_size(size), m_str(new char[size]) { 
+		cout << "Constructor1" << endl;
+		fill(m_str, m_str + m_size, s);
+	}
+	// Список инициализаций членов класса //
+	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size]) { 
+		cout << "Constructor2" << endl;
+		copy(str, str + m_size, m_str); 
+	}
+	// Конструктор копирования //
+	stroki(const stroki& other) { //(куда передаем, из чего копируем)
+		cout << "Copy Constructor" << endl;
+		m_size = other.m_size;
+		m_str = other.m_str;
+	}
+	// Диструктор //
+	~stroki() {
+		cout << "Destructor" << endl;
+		if (m_str != nullptr) {
+			delete[] m_str; } 
+	}
+	// Константный метод //
+	size_t Size() const { 
+		return m_size;
+	}
+	void Print()const {
 		for (int i = 0; i < m_size; i++) {
-			m_str[i] = s;
+			cout << m_str[i];
 		}
 	}
-	stroki(int s, size_t size) = delete; // конструктор запрещен в этой кассе!
-	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size]) {
-		copy(str, str + m_size, m_str); //mempcy
-
-	}
-
 };
-
 int main() {
-
-
+	stroki s1("Hello, world");
+	stroki s2 = s1;
+	s1.Print();
+	s2.Print();
 	system("pause");
 }
