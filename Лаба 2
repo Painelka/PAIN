@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+struct stroki {
+private:
+	size_t m_size = 1;
+	char*m_str = nullptr;
+
+public:
+	stroki() = default; // конструктор по умолчанию 
+	stroki(char s, size_t size) { // Преобразования из int в char
+		m_size = size;
+		m_str = new char[size];
+		for (int i = 0; i < m_size; i++) {
+			m_str[i] = s;
+		}
+	}
+	stroki(int s, size_t size) = delete; // конструктор запрещен в этой кассе!
+	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size]) {
+		copy(str, str + m_size, m_str); //mempcy
+
+	}
+
+};
+
+int main() {
+
+
+	system("pause");
+}
