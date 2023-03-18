@@ -1,4 +1,6 @@
+#pragma warning(disable : 4996)
 #include <iostream>
+
 using namespace std;
 
 struct stroki {
@@ -17,11 +19,11 @@ public:
 	}
 	// Список инициализаций членов класса //
 	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size]) { 
-		cout << "Constructor2" << endl;
+		cout << "Constructor2 " << endl;
 		copy(str, str + m_size, m_str); 
 	}
 	// Конструктор копирования //
-	stroki(const stroki& other) { //(куда передаем, из чего копируем)
+	stroki(const stroki& other) { //(куда передаем, из чего копируем [любое название])
 		cout << "Copy Constructor" << endl;
 		m_size = other.m_size;
 		m_str = other.m_str;
@@ -42,10 +44,12 @@ public:
 		}
 	}
 };
+
 int main() {
 	stroki s1("Hello, world");
 	stroki s2 = s1;
 	s1.Print();
 	s2.Print();
+	return 0;
 	system("pause");
 }
