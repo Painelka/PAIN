@@ -6,9 +6,15 @@ struct stroki {
 private:
 	size_t m_size = 1;
 	char*m_str = nullptr; // Чтобы диструктор не ругался //
+	friend ostream& operator << (ostream& fout, stroki& str);
+	friend ostream& operator >> (ostream& fin, stroki& str);
 public:
 	// Конструктор по умолчанию //
-	stroki() = default; 
+	stroki() {
+		cout << "default Constructor" << endl;
+		size_t m_size = 0;
+		m_str = 0;
+	}
 	// Конструктор запрещен //
 	stroki(int s, size_t size) = delete; 
 	// Преобразования из int в char //
@@ -19,22 +25,68 @@ public:
 	}
 	// Список инициализаций членов класса //
 	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size+1]) { 
-		cout << "Constructor2 " << endl;
+		cout << "Constructor2 " << str<< endl;
 		copy(str, str + m_size, m_str); 
 		m_str[m_size] = 0;
 	}
 	// Конструктор копирования + Дилигирующий конструктор //
 	stroki(const stroki& other):stroki(other.m_str) { 
-		//(куда передаем, из чего копируем [любое название])
 		cout << "Copy Constructor" << endl;
+	}
+	stroki& operator = (const stroki& other) {
+		cout << "Copy assigment operator" << endl;
+		delete[] m_str;
+		m_size = other.m_size;
+		m_str = new char[m_size];
+		copy(other.m_str, other.m_str + other.m_size, m_str);
+		return *this;
+	}
+	stroki& operator +=(const stroki& other) { //a=a+b
+		cout << "Pereopredelenie operator" << endl;
+		char* newstr = new char[m_size + other.m_size+1];
+		copy(m_str, m_str + m_size, newstr);
+		copy(other.m_str, other.m_str + other.m_size+1, newstr+m_size);
+		delete[] m_str;
+		m_str = newstr;
+		m_size = strlen(m_str);
+		return *this;
+	}
+	stroki operator + (const stroki& other) { // c=a+b
+		cout << "Summa operator" << endl;
+		char* newstr = new char[m_size + other.m_size + 1];
+		copy(m_str, m_str + m_size, newstr);
+		copy(other.m_str, other.m_str + other.m_size + 1, newstr + m_size);
+		stroki a(newstr);
+		return a;
+	}
+	char operator [] (int number) {
+		cout << "Number operator" << endl;
+		return char(m_str[number]);
+	}
+	bool operator > ( const stroki& other) {
+		return strcmp(m_str, other.m_str) > 0;
+	}
+	bool operator == (const stroki& other) {
+		return strcmp(m_str, other.m_str) == 0;
+	}
+	bool operator < (const stroki& other) {
+		return strcmp(m_str, other.m_str) < 0;
+	}
 
-		//m_size = other.m_size;
-		//m_str = other.m_str;
-		////Выделяем память //
-		//m_str = new char[m_size];
-		////Копируем строку из other //
-		//copy(other.m_str, other.m_str + other.m_size, m_str);
-		
+	char* c_str() {
+		return m_str;
+	}
+	int length () {
+		cout << "Length operator" << endl;
+		return m_size;
+	}
+	int find (char symbol){
+		for (int i = 0; i < m_size; i++) {
+			if (m_str[i] == symbol) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	// Диструктор //
 	~stroki() {
@@ -46,22 +98,34 @@ public:
 	size_t Size() const { 
 		return m_size;
 	}
-	void Print()const {
+	void Print() const{
+		cout << endl;
+		cout << endl;
+		cout << endl;
 		for (int i = 0; i < m_size; i++) {
 			cout << m_str[i];
 		}
 		cout << endl;
+		cout << endl;
+		cout << endl;
 	}
 };
-void f(stroki s) {
-	s.Print();
+
+ostream& operator << (ostream& fout, stroki& str) {
+	for (int i = 0; i < str.m_size; i++) {
+		fout << str.m_str[i];
+	}
+	fout << endl;
+	return fout;
+}
+ostream& operator >> (ostream& fin, stroki& str) {
+
 }
 int main() {
-	stroki s1("Hello, world");
-	f(s1);
-	//stroki s2 = s1;
-	//s1.Print();
-	//s2.Print();
-	//return 0;
+	stroki s1 ("LOLAOLAOLA");
+	stroki s2 ("lololo");
+	stroki s3 = s1 + s2;
+	s1.Print();
+	cout << s1.c_str() << endl;
 	system("pause");
 }
