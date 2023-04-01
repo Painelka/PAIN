@@ -4,37 +4,37 @@ using namespace std;
 
 struct stroki {
 private:
-	size_t m_size = 1;
+	size_t m_size = 0;
 	char*m_str = nullptr; // Чтобы диструктор не ругался //
 	friend ostream& operator << (ostream& fout, stroki& str);
-	friend ostream& operator >> (ostream& fin, stroki& str);
+	friend istream& operator >> (istream& in, stroki& str);
 public:
 	// Конструктор по умолчанию //
 	stroki() {
-		cout << "default Constructor" << endl;
+		/*cout << "default Constructor" << endl;*/
 		size_t m_size = 0;
-		m_str = 0;
+		m_str = nullptr;
 	}
 	// Конструктор запрещен //
 	stroki(int s, size_t size) = delete; 
 	// Преобразования из int в char //
 	stroki(char s, size_t size) : m_size(size), m_str(new char[size+1]) { 
-		cout << "Constructor1" << endl;
+		/*cout << "Constructor1" << endl;*/
 		fill(m_str, m_str + m_size, s);
 		m_str[m_size] = 0;
 	}
 	// Список инициализаций членов класса //
 	stroki(char* str) : m_size(strlen(str)), m_str(new char[m_size+1]) { 
-		cout << "Constructor2 " << str<< endl;
+		/*cout << "Constructor2 " << str<< endl;*/
 		copy(str, str + m_size, m_str); 
 		m_str[m_size] = 0;
 	}
 	// Конструктор копирования + Дилигирующий конструктор //
 	stroki(const stroki& other):stroki(other.m_str) { 
-		cout << "Copy Constructor" << endl;
+		/*cout << "Copy Constructor" << endl;*/
 	}
 	stroki& operator = (const stroki& other) {
-		cout << "Copy assigment operator" << endl;
+		/*cout << "Copy assigment operator" << endl;*/
 		delete[] m_str;
 		m_size = other.m_size;
 		m_str = new char[m_size];
@@ -42,7 +42,7 @@ public:
 		return *this;
 	}
 	stroki& operator +=(const stroki& other) { //a=a+b
-		cout << "Pereopredelenie operator" << endl;
+		/*cout << "Pereopredelenie operator" << endl;*/
 		char* newstr = new char[m_size + other.m_size+1];
 		copy(m_str, m_str + m_size, newstr);
 		copy(other.m_str, other.m_str + other.m_size+1, newstr+m_size);
@@ -52,15 +52,16 @@ public:
 		return *this;
 	}
 	stroki operator + (const stroki& other) { // c=a+b
-		cout << "Summa operator" << endl;
+		/*cout << "Summa operator" << endl;*/
 		char* newstr = new char[m_size + other.m_size + 1];
 		copy(m_str, m_str + m_size, newstr);
 		copy(other.m_str, other.m_str + other.m_size + 1, newstr + m_size);
 		stroki a(newstr);
 		return a;
 	}
-	char operator [] (int number) {
-		cout << "Number operator" << endl;
+	//Operators//
+	char operator [] (int number) { //[]
+		/*cout << "Number operator" << endl;*/
 		return char(m_str[number]);
 	}
 	bool operator > ( const stroki& other) {
@@ -72,15 +73,15 @@ public:
 	bool operator < (const stroki& other) {
 		return strcmp(m_str, other.m_str) < 0;
 	}
-
 	char* c_str() {
 		return m_str;
 	}
-	int length () {
-		cout << "Length operator" << endl;
+	int length () { //length
+		/*cout << "Length operator" << endl;*/
 		return m_size;
 	}
-	int find (char symbol){
+	int find (char symbol){ //find
+		/*cout << "Find operator" << endl;*/
 		for (int i = 0; i < m_size; i++) {
 			if (m_str[i] == symbol) {
 				return i;
@@ -88,9 +89,15 @@ public:
 		}
 		return -1;
 	}
-	// Диструктор //
+	char at(int chislo) { // at
+		/*cout << "At operator" << endl;*/
+		if ((0 <= chislo) && ( chislo <=(m_size-1))) {
+			return m_str[chislo];
+		}
+		return '\0';
+	}
+	 //Диструктор //
 	~stroki() {
-		cout << "Destructor" << endl;
 		if (m_str != nullptr) {
 			delete[] m_str; } 
 	}
@@ -100,17 +107,12 @@ public:
 	}
 	void Print() const{
 		cout << endl;
-		cout << endl;
-		cout << endl;
 		for (int i = 0; i < m_size; i++) {
 			cout << m_str[i];
 		}
 		cout << endl;
-		cout << endl;
-		cout << endl;
 	}
 };
-
 ostream& operator << (ostream& fout, stroki& str) {
 	for (int i = 0; i < str.m_size; i++) {
 		fout << str.m_str[i];
@@ -118,14 +120,49 @@ ostream& operator << (ostream& fout, stroki& str) {
 	fout << endl;
 	return fout;
 }
-ostream& operator >> (ostream& fin, stroki& str) {
-
+istream& operator >> (istream& in, stroki& str) {
+	char nep;
+	char* sp;
+	while (in.get(nep)) {
+		if ((nep == '\n') || (nep == '\0')) {
+			break;
+		}
+		sp = new char[str.m_size];
+		for (int i = 0; i < str.m_size; i++) {
+			sp[i] = str.m_str[i];
+		}
+		if (str.m_str != nullptr) {
+			delete[] str.m_str;
+		}
+		str.m_size++;
+		str.m_str = new char[str.m_size];
+		for (int i = 0; i < str.m_size-1; i++) {
+			str.m_str[i] = sp[i];
+		}
+		str.m_str[str.m_size - 1] = nep;
+		delete[] sp;
+	}
+	return in;
 }
 int main() {
-	stroki s1 ("LOLAOLAOLA");
-	stroki s2 ("lololo");
-	stroki s3 = s1 + s2;
-	s1.Print();
-	cout << s1.c_str() << endl;
+	stroki s;
+	cin >> s;
+	stroki s1("okoLol");
+	stroki s2("So sorryll");
+	stroki s4("So sorry");
+	stroki s3;
+	s4 += s1;
+	s3 = s2 + s1;
+	cout <<"+=: " << s4;
+	cout << "+: " << s3;
+	cout << "[]: " << s1[3] << endl;
+	cout << ">: " << (s1 > s2) << endl;
+	cout << "<: " << (s1 < s2) << endl;
+	cout << "=: " << (s1 == s2) << endl;
+	cout << "Operator output: " << s;
+	cout << "find: "<<s1.find('l') << endl;
+	cout << "length: " << s1.length() << endl;
+	cout << "c_str: "<< s1.c_str() << endl;
+	cout <<"at: " << s1.at(2) << endl;
 	system("pause");
 }
