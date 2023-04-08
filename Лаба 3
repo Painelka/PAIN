@@ -1,0 +1,18 @@
+#include <iostream>
+using namespace std;
+class Complex {
+private:
+	double m_a, m_b;
+public:
+	Complex(double a = 0.0, double b = 0.0) :m_a(a), m_b(b){}
+	Complex(const Complex& z) {
+		cout << "Copy Constructor" << endl;
+		m_a = z.m_a;
+		m_b = z.m_b;
+	}
+};
+
+
+int main() {
+
+}
