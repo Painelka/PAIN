@@ -3,16 +3,88 @@ using namespace std;
 class Complex {
 private:
 	double m_a, m_b;
+	friend ostream& operator << (ostream& fout, Complex& z);
+	friend istream& operator >> (istream& in, Complex& z);
 public:
-	Complex(double a = 0.0, double b = 0.0) :m_a(a), m_b(b){}
+	 explicit Complex(double a = 0.0, double b = 0.0) :m_a(a), m_b(b){
+		cout << "Basic Constructor" << endl;
+	} 
 	Complex(const Complex& z) {
-		cout << "Copy Constructor" << endl;
+	/*	cout << "Copy Constructor" << endl;*/
 		m_a = z.m_a;
 		m_b = z.m_b;
 	}
+	Complex& operator = (Complex z) {
+	/*	cout << "Copy assigment operator" << endl;*/
+		swap(m_a, z.m_a);
+		swap(m_b, z.m_b);
+		return *this;
+	}
+	Complex& operator += (const Complex& z) {
+	/*	cout << "+= operator" << endl;*/
+		(*this).m_a = (*this).m_a + z.m_a;
+		(*this).m_b = (*this).m_b + z.m_b;
+		return *this;
+	}
+	Complex operator +(const Complex& z) { // нет ссылки так как нам бы пришлось this и z  местами и z1 по итогу меняется что недопустимо
+		/*cout << "+ operator" << endl;*/
+		Complex tp = *this; // времення переменная
+		tp.m_a = tp.m_a + z.m_a;
+		tp.m_b = tp.m_b + z.m_b;
+		return tp;
+	}
+	Complex& operator *= (const Complex& z) {
+		/*cout << "*= operator" << endl;*/
+		Complex tp = *this; // времення переменная
+		tp.m_a = m_a * z.m_a - m_b*z.m_b;
+		tp.m_b = m_a*z.m_b + m_b*z.m_a;
+		(*this).m_a =tp.m_a;
+		(*this).m_b = tp.m_b;
+		return *this;
+	}
+	Complex operator *(const Complex& z) { 					 
+		Complex tp = *this; // времення переменная
+		tp.m_a = m_a * z.m_a - m_b*z.m_b;
+		tp.m_b = m_a*z.m_b+m_b*z.m_a;
+		return tp;
+	}
+	Complex operator ++(int) { 
+		/*	cout << "++ operator" << endl;*/
+		Complex tmp(m_a, m_b);
+		++(*this).m_a;
+		return tmp;
+	}
+	Complex& operator ++() {
+		/*	cout << "++ operator" << endl;*/
+		m_a++;
+		return *this;
+	}
+	~Complex() {
+		cout << "Distructor work!" << endl;
+	}
 };
-
-
-int main() {
-
+ostream& operator << (ostream& fout, Complex& z) {
+	fout << z.m_a << "+" << z.m_b << "i";
+	return fout;
 }
+istream& operator >> (istream& in, Complex& z) {
+	cout << "Vvedite deistvitelnyu chasti" << endl;
+	in >> z.m_a;
+	cout << "Vvedite mnimyu chasti" << endl;
+	in >> z.m_b;
+	return in;
+}
+int main() {
+	Complex z1(1, 1), z2(2, 1), z3(3, 4), z4(2, 4), z5;
+	z3 += z1;
+	/*cout << "* operator " << (z2*z4) << endl;*/
+	cout << "*= operator " << (z4*=z3) << endl;
+	cout << "+= operator " << z3 << endl;
+	cout << "+ operator " << (z1 + z2) << endl;
+	cout << "++ operator pref" << (++z1) << endl;
+	cout << "++ operator post" << (z1++) << endl;
+	cout << "post" << (z1) << endl;
+	cin >> z5;
+	cout << "foat " << z5 << endl;
+	system("pause");
+	return 0;
