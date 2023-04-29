@@ -1,0 +1,166 @@
+#include <iostream>
+using namespace std;
+template <typename T,int N, int M>
+class Matrix
+{
+	T m_matrix[N][M];
+	int m_m, m_n;
+public:
+		//copy//
+	Matrix (const Matrix& other) {
+		m_n = N;
+		m_m = M;
+		if (m_n != other.m_n || m_m != other.m_m) {
+			cout << "ERROR" << endl;
+		}
+		else {
+			cout << "Copy operator" << endl;
+			for (int i = 0; i < m_n; i++) {
+				for (int j = 0; j < m_m; j++) {
+					m_matrix[i][j] = other.m_matrix[i][j];
+				}
+			}
+		}
+	}
+		//Basic constructor//
+	Matrix(int n, int m) {
+		m_n = n;
+		m_m = m;
+		cout << "Basic constructor" << endl;
+		for (int i = 0; i < m_n; i++) {
+			for (int j = 0; j < m_m; j++) {
+				m_matrix[i][j] = 0;
+			}
+		}
+	}
+		//nulptr//
+	Matrix() {
+		m_n = N;
+		m_m = M;
+		cout << "Copy operator" << endl;
+		for (int i = 0; i < m_n; i++) {
+			for (int j = 0; j < m_m; j++) {
+				m_matrix[i][j] = 0;
+			}
+		}
+	}
+		//=//
+	Matrix& operator=(Matrix& other) {
+		m_n = N;
+		m_m = M;
+		if (m_n != other.m_n || m_m != other.m_m) {
+			cout << "ERROR" << endl;
+		}
+		else {
+			cout << "Copy assigment operator" << endl;
+			for (int i = 0; i < m_n; i++) {
+				for (int j = 0; j < m_m; j++) {
+					swap(m_matrix[i][j], other.m_matrix[i][j]);
+				}
+			}
+			return *this;
+		}
+	}
+	//+=//
+	Matrix& operator += (Matrix& other) {
+		m_n = N;
+		m_m = M;
+		if (m_n != other.m_n || m_m != other.m_m) {
+			cout << "ERROR" << endl;
+		}
+		else {
+			cout << "+= operator" << endl;
+			for (int i = 0; i < m_n; i++) {
+				for (int j = 0; j < m_m; j++) {
+					m_matrix[i][j] = other.m_matrix[i][j] + m_matrix[i][j];
+				}
+			}
+			return *this;
+		}
+	}
+	//+//
+	Matrix operator + (Matrix& other) {
+		m_n = N;
+		m_m = M;
+		if (m_n != other.m_n || m_m != other.m_m) {
+			cout << "ERROR" << endl;
+		}
+		else {
+			cout << "+ operator" << endl;
+			Matrix tp(m_n, m_m); // времення переменная
+			for (int i = 0; i < m_n; i++) {
+				for (int j = 0; j < m_m; j++) {
+					tp.m_matrix[i][j] = other.m_matrix[i][j] + m_matrix[i][j];
+				}
+			}
+			return tp;
+		}
+	}
+	//++//
+	Matrix& operator ++ (int) {
+		m_n = N;
+		m_m = M;
+		cout << "++ operator" << endl;
+		for (int i = 0; i < m_n; i++) {
+			for (int j = 0; j < m_m; j++) {
+				m_matrix[i][j] = 1 + m_matrix[i][j];
+			}
+		}
+		return *this;
+	}
+	//*=//
+	Matrix& operator *= (Matrix& other) {
+		m_n = N;
+		m_m = M;
+		int k = 0;
+		if (m_m != other.m_n) {
+			cout << "ERROR" << endl;
+		}
+		else {
+			cout << "*= operator" << endl;
+			for (int i = 0; i < m_n; i++) {
+				for (int j = 0; j < m_m; j++) {
+					for (int k = 0; k < m_m; k++){
+						m_matrix[j][k] += m_matrix[i][j] * other.m_matrix[j][i];
+				}
+				}
+			}
+			return *this;
+		}
+	}
+
+	//-------------------------------------------------//
+	friend istream& operator >> (istream& in, Matrix& other) {
+		cout << "Vvedite matrix" << endl;
+		for (int i = 0; i < other.m_n; i++) {
+			for (int j = 0; j < other.m_m; j++) {
+				in >> other.m_matrix[i][j];
+			}
+		}
+		return in;
+	}
+	friend ostream& operator << (ostream& fout, const Matrix& other) {
+		for (int i = 0; i < other.m_n; i++) {
+			for (int j = 0; j < other.m_m; j++) {
+				fout << other.m_matrix[i][j] << " ";
+			}
+			cout << endl;
+		}
+		return fout;
+	}
+};
+
+
+
+
+int main() {
+	Matrix <int, 2, 2> now;
+	Matrix <int, 2, 2> other;
+	Matrix <int, 2, 2> sum;
+	cin >> now;
+	cin >> other;
+	/*other = now;*/
+	cout << (now*=other) << endl;
+
+	system("pause");
+}
