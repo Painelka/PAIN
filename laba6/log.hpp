@@ -1,4 +1,5 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -8,7 +9,8 @@ using namespace std;
 
 enum class loglevel {
 	DEBUG,
-	RELEASE
+	ERROR,
+	INFO
 };
 class log
 {
@@ -26,18 +28,26 @@ public:
 		m_out.open(path);
 	}
 	static void Info(const string& msg) {
-		if (m_loglevel == loglevel::DEBUG) {
+		if (m_loglevel == loglevel::INFO) {
 			cerr << msg << endl;
 		}
 		m_out << msg << endl;
-		m_out.flush(); // сбросить в файл все что есть в буфере
+
+		//time_t now = time(0);
+		//char* dt = ctime(&now);
+		//cout << dt << endl;
+		//m_out.flush(); // сбросить в файл все что есть в буфере
 	}
 
 	static void Error(const string& msg) {
-		if (m_loglevel == loglevel::DEBUG) {
+		if (m_loglevel == loglevel::ERROR) {
 			cerr << msg << endl;
 		}
 		m_out << msg << endl;
+
+		/*time_t now = time(0);
+		char* dt = ctime(&now);
+		cout << dt << endl;*/
 	}
 
 	static void Debug(const string& msg) {
@@ -45,8 +55,15 @@ public:
 			cerr << msg << endl;
 		}
 		m_out << msg << endl;
+
+		/*time_t now = time(0);
+		char* dt = ctime(&now);
+		cout << dt << endl;
+*/
 	}
 	~log() {
 		cout << "Destr" << endl;
 	}
 };
+
+
