@@ -2,8 +2,10 @@
 #include "log.hpp"
 
 int main() {
-	logger::log::SetLogPath("log.txt");
-	logger::log::Debug("111111111111111");
-	logger::log::Info("111");
-
+	log::SetLogPath("log.txt");
+        log::SetLoglevel(loglevel::DEBUG);
+	log::Debug("111111111111111");
+	log::Info("111");
+	log::Error("ER");
+	system("pause");
 }
