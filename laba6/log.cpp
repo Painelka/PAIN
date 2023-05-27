@@ -1,4 +1,4 @@
 #include "log.hpp"
-namespace logger{
-	ofstream logger::log::m_out;
-}
+
+ofstream log::m_out;
+loglevel log::m_loglevel;
