@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+class KinimaticSolver {
+private:
+	int l1;
+	int l2;
+	int m_x, m_y;
+public:
+	KinimaticSolver() {
+		cout << "constructor" << endl;
+	}
+	KinimaticSolver(const KinimaticSolver& other) {
+		m_x = other.m_x;
+		m_y = other.m_y;
+	}
+	void read() {
+		cout << "Vvedite l1" << endl;
+		cin >> l1;
+		cout << "Vvedite l2" << endl;
+		cin >> l2;
+		cout << "Vvedite znach tochki (X and Y) " << endl;
+		cin >> m_x;
+		cin >> m_y;
+	}
+	void proverka() {
+
+		int dlina = sqrt(m_x ^ 2 + m_y ^ 2);
+		int dlina2 = l1 + l2;
+		if (dlina > dlina2) {
+			cout << "ERROR Dlina" << endl;
+		}
+	}
+	void solv() {
+		const double PI = 3.14159265;
+		int B = sqrt(m_x ^ 2 + m_y ^ 2); //прямая B соединяющая т. О и с заданной точку (х,у)
+		float q1 = acos(m_x / B); // угол между осью OX и прямой B
+		float q2 = acos(l1 ^ 2 - l2 ^ 2 + B ^ 2 / 2 * B*l1);// угол между прямой B и плечом L1
+		float Q1 = q1 - q2; // угол альфа
+		float Q2 = PI - acos(l1 ^ 2 + l2 ^ 2 - B ^ 2 / 2 * l1*l2);
+	}
+
+
+
+
+
+
+	~KinimaticSolver() {
+		cout << "distructor" << endl;
+	}
+};
+
+
+int main(){
+	KinimaticSolver M;
+	M.read();
+	M.proverka();
+	system("pause");
+}
