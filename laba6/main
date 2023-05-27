@@ -1,11 +1,13 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include "log.hpp"
 
 int main() {
 	log::SetLogPath("log.txt");
-        log::SetLoglevel(loglevel::DEBUG);
-	log::Debug("111111111111111");
-	log::Info("111");
+    log::SetLoglevel(loglevel::DEBUG);
+	/*log::Debug("111111111111111");
+	log::Info("234");
 	log::Error("ER");
+	log::Debug("111111111");*/
 	system("pause");
 }
