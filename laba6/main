@@ -1,0 +1,9 @@
+#include <iostream>
+#include "log.hpp"
+
+int main() {
+	logger::log::SetLogPath("log.txt");
+	logger::log::Debug("111111111111111");
+	logger::log::Info("111");
+
+}
