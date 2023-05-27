@@ -36,7 +36,7 @@ public:
 		float q1 = acos(m_x / B); // угол между осью OX и прямой B
 		float q2 = acos(l1 ^ 2 - l2 ^ 2 + B ^ 2 / 2 * B*l1);// угол между прямой B и плечом L1
 		float Q1 = q1 - q2; // угол альфа
-		float Q2 = PI - acos(l1 ^ 2 + l2 ^ 2 - B ^ 2 / 2 * l1*l2);
+		float Q2 = PI - acos(l1 ^ 2 + l2 ^ 2 - B ^ 2 / 2 * l1*l2); // угол бета 
 	}
 
 
