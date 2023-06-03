@@ -2,9 +2,10 @@
 using namespace std;
 class KinimaticSolver {
 private:
-	int l1;
-	int l2;
-	int m_x, m_y;
+	const double l1 = 5;
+	const double l2 = 4;
+	double m_x, m_y;
+	bool dlina1 = true;
 public:
 	KinimaticSolver() {
 		cout << "constructor" << endl;
@@ -14,34 +15,55 @@ public:
 		m_y = other.m_y;
 	}
 	void read() {
-		cout << "Vvedite l1" << endl;
-		cin >> l1;
-		cout << "Vvedite l2" << endl;
-		cin >> l2;
-		cout << "Vvedite znach tochki (X and Y) " << endl;
+		cout << "Vvedite znach tochki  M (X and Y) " << endl;
 		cin >> m_x;
 		cin >> m_y;
+
 	}
 	void proverka() {
-
-		int dlina = sqrt(m_x ^ 2 + m_y ^ 2);
-		int dlina2 = l1 + l2;
-		if (dlina > dlina2) {
-			cout << "ERROR Dlina" << endl;
+		
+		double dlina = sqrt(m_x * m_x + m_y * m_y);
+		if (dlina > (l1+l2)) {
+			cout << "ERROR Dlina1" << endl;
+			dlina1 = false;
 		}
+		if (l1 > (dlina + l2)) {
+			cout << "ERROR Dlina2" << endl;
+			dlina1 = false;
+		}
+		if (l2 > (dlina + l1)) {
+			cout << "ERROR Dlina3" << endl;
+			dlina1 = false;
+		}
+	/*	if ((m_x < 0) || (m_y < 0)) {
+			cout << "ERROR" << endl;
+		}*/
 	}
 	void solv() {
-		const double PI = 3.14159265;
-		int B = sqrt(m_x ^ 2 + m_y ^ 2); //прямая B соединяющая т. О и с заданной точку (х,у)
-		float q1 = acos(m_x / B); // угол между осью OX и прямой B
-		float q2 = acos(l1 ^ 2 - l2 ^ 2 + B ^ 2 / 2 * B*l1);// угол между прямой B и плечом L1
-		float Q1 = q1 - q2; // угол альфа
-		float Q2 = PI - acos(l1 ^ 2 + l2 ^ 2 - B ^ 2 / 2 * l1*l2); // угол бета 
+		if (dlina1) {
+			const double PI = 3.14159265;
+			double B = sqrt(m_x * m_x + m_y * m_y); //прямая B соединяющая т. О и с заданной точку (х,у)
+			double q1 = acos(m_x / B); // угол между осью OX и прямой B
+			double q2 = acos((l1 * l1 - l2 * l2 + B * B) / (2.0 * B*l1));// угол между прямой B и плечом L1
+			if ((0 <= q1 <= 1) || (0 <= q2 <= 1)) {
+				double Q1 = q1 - q2; // угол альфа
+				double Q2 = acos((l1 * l1 + l2 * l2 - B * B) / (2.0 * l1*l2)); // угол бета
+				//cout << q1 << endl;
+				//cout << q2 << endl;
+				/*cout << Q1 << endl;
+				cout << Q2 << endl;*/
+			}
+			else {
+				cout << "ERROR angle" << endl;
+			}
+		}
+		else {
+			cout << "Ne korektno vvedeni dannie" << endl;
+		}
 	}
+	void shar() {
 
-
-
-
+	}
 
 
 	~KinimaticSolver() {
@@ -50,9 +72,14 @@ public:
 };
 
 
-int main(){
+int main() {
 	KinimaticSolver M;
+	KinimaticSolver M1;
 	M.read();
 	M.proverka();
+	M.solv(); 
+	M1.read();
+	M1.proverka();
+	M1.solv();
 	system("pause");
 }
