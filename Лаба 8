@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+template <typename U>
+
+
+class Stack {
+private:
+	U* stack;
+	int TopPointer; //  номер вершины мтека
+	int m_size;
+public:
+	Stack(int size) {
+		stack = new U[size];
+		m_size = size;
+		TopPointer = -1;
+	}
+	~Stack (){
+		delete[] stack;
+	}
+	int size() {
+		return TopPointer + 1;
+	}
+	bool empty() { // для проверки, пуст stack или нет
+		return TopPointer == -1;
+	}
+	void push(U element) {
+		if (m_size == size()) { // проверяем полон ли стек
+			cout << "overflow_error" << endl;
+			return;
+		}
+		else {
+			TopPointer = TopPointer + 1;
+			stack[TopPointer] = element;
+		}
+	}
+	void pop() {
+		if (TopPointer == -1) {
+			cout << "out_of_range" << endl;
+		}
+		else {
+			TopPointer = TopPointer - 1; //  уменьшаем размер stack на 1
+		}
+	}
+	U top() {
+		if (TopPointer == -1) { // посмотреть верхний элемент
+			cout << "logic_error" << endl;
+		}
+		else {
+			return stack[TopPointer];
+		}
+	}
+ };
+
+int main() {
+	Stack<int> stack(5);
+	cout <<"Old size " << stack.size() << endl;
+	stack.push(1);
+	stack.push(2);
+	stack.push(3);
+	stack.push(4);
+	cout << "New size " << stack.size() << endl;
+	stack.push(5);
+	stack.push(6);
+	cout << "Empty " << stack.empty() << endl;
+	stack.pop();
+	cout << "Element " << stack.top() << endl;
+	system("pause");
+}
