@@ -1,0 +1,68 @@
+using namespace std;
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <iostream>
+#include <vector>
+
+enum class Color {
+	GREEN,
+	PINK,
+	GREY,
+};
+class Figure{
+protected:
+	double m_x, m_y = 0;
+	Color m_color;
+	vector <int> m_size;
+public:
+	Figure(double x, double y, Color color, vector <int> size) {
+		m_color = color;
+		m_x = x;
+		m_y = y;
+		m_size = size;
+	}
+	virtual void getPloshadi(){}
+};
+
+class triangle : public Figure {
+public:
+	triangle(double x, double y, Color color, vector <int> size) : Figure(x, y, color, size) {}
+	~triangle() {}
+	void getPloshadi() override {
+		double pol_perimetr = (m_size[0] + m_size[1] + m_size[2]) / 2;
+		double ploshadi = sqrt(pol_perimetr*(pol_perimetr-m_size[0])* (pol_perimetr - m_size[1])* (pol_perimetr - m_size[2]));
+		cout << ploshadi << endl;
+
+	}
+};
+
+class circle : public Figure {
+public:
+	circle(double x, double y, Color color, vector <int> size) : Figure(x, y, color, size) {}
+	~circle() {}
+	void getPloshadi() override {
+		double ploshadi = M_PI * m_size[0] * m_size[0];
+		cout << ploshadi << endl;
+	}
+};
+
+class rectangle : public Figure {
+public:
+	rectangle(double x, double y, Color color, vector <int> size) : Figure(x, y, color, size) {}
+	~rectangle() {}
+	void getPloshadi() override {
+		double ploshadi = m_size[1] * m_size[0];
+		cout << ploshadi << endl;
+	}
+};
+
+
+int main() {
+	triangle triangle(0.0, 0.0, Color::PINK, { 3, 4, 5 } );
+	rectangle rectangle(0.0, 0.0, Color::GREY, { 5, 6 } );
+	circle circle(0.0, 0.0, Color::GREY, { 7 } );
+	triangle.getPloshadi();
+	rectangle.getPloshadi();
+	circle.getPloshadi();
+	system("pause");
+}
